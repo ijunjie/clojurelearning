@@ -1,13 +1,26 @@
 (ns clojurelearning.ch2logger)
 
+
+(def logfile "messages.log")
+
+(defn clear-file
+  [file]
+  (with-open [f (clojure.java.io/writer file :append false)]
+    (.write f "")))
+
 (defn print-logger
   [writer]
   #(binding [*out* writer]
      (println %)))
-; 1. std
-(def *out*-logger (print-logger *out*))
-; 2. mem
-(def mem-writer (java.io.StringWriter.))
-(def mem-logger (print-logger mem-writer))
-; 3. file
+(defn file-logger
+  [file]
+  #(with-open [f (clojure.java.io/writer file :append true)]
+     ((print-logger f) %)))
+(defn multi-logger
+  [& logger-fns]
+  #(doseq [f logger-fns]
+     (f %)))
+(def log (multi-logger
+           (print-logger *out*)
+           (file-logger logfile)))
 

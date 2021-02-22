@@ -1,11 +1,20 @@
 (ns clojurelearning.core
   (:gen-class))
 
-(require 'clojurelearning.ch2logger)
+(require '[clojurelearning.ch2logger :as logger])
+
+
+(def mymem (java.io.StringWriter.))
+
+
 
 (defn -main []
-  #_(println "Hello, World!")
-  (clojurelearning.ch2logger/*out*-logger "hello to std")
-  (clojurelearning.ch2logger/mem-logger "hello to mem")
-  (println (str clojurelearning.ch2logger/mem-writer)))
+   (logger/clear-file logger/logfile)
+   ((logger/print-logger *out*) "hello to std")
+   ((logger/print-logger mymem) "hello to mem")
+   (println (str mymem))
+   ((logger/file-logger logger/logfile) "hello to file")
+   (logger/log "hello both std and file"))
+
+  
 
