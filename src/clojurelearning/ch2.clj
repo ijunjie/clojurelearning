@@ -5,7 +5,7 @@
   (f x)
   (f x))
 
-(call-twice println 123)
+#_(call-twice println 123)
 
 (max 5 6)
 (clojure.string/lower-case "Clojure")
@@ -51,5 +51,18 @@
                       #(clojure.string/split % #"(?<=[a-z])(?=[A-Z])")))
 
 (camel->keyword "CamelCase")
+
+
+(defn prime?
+  [n]
+  (cond
+    (== 1 n) false
+    (== 2 n) true
+    (even? n) false
+    :else (->> (range 3 (inc (Math/sqrt n)) 2)
+               (filter #(zero? (rem n %)))
+               empty?)))
+(def m-prime? (memoize prime?))
+
 
 
