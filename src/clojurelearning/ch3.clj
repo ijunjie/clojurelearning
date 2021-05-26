@@ -38,11 +38,25 @@
 (map-map inc (sorted-map :z 5 :c 6 :a 0))
 
 
+(def mynext (comp seq rest))
+(= (next '(1 2 3)) (mynext '(1 2 3)))
+(= (next '()) (mynext '()))
+
+#_(let [s (range 1e6)]
+   (time (count s)))
+
+#_(let [s (apply list (range 1e6))] (time (count s)))
 
 
+(defn random-ints
+  "Returns a lazy seq of random integers in the range [0,limit)"
+  [limit]
+  (lazy-seq
+    (println "realizing random number")
+    (cons (rand-int limit)
+          (random-ints limit))))
 
-
-
+(def rands (take 10 (random-ints 50)))
 
 
 
