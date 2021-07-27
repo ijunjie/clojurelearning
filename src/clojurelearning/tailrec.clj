@@ -28,3 +28,16 @@
       r
       (recur (* r i) (+ i 1)))))
 (factorial 5)
+
+
+(defn factorial2
+  [n]
+  (loop [acc n
+         i n]
+    (if (= i 1)
+      acc
+      (recur (* acc (- i 1)) (- i 1)))))
+(factorial2 5)
+  
+
+
